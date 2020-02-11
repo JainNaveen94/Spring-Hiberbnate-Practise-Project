@@ -65,4 +65,6 @@ public class StudentController {
 	public String deleteCertificate(@PathVariable String certificateId) {
 		return this.certificateDto.deleteCertificate(certificateId);
 	}
+	
+	/* Subjects Related Hits are here */
 }
