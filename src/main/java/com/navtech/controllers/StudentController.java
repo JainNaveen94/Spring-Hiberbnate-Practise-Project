@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.navtech.dto.CertificateDTO;
+import com.navtech.dto.ReviewDTO;
 import com.navtech.dto.StudentDTO;
 import com.navtech.dto.models.CertificateDTOModel;
+import com.navtech.dto.models.ReviewDTOModel;
 import com.navtech.dto.models.StudentDTOModel;
 
 @RestController
@@ -29,6 +31,11 @@ public class StudentController {
 	
 	@Autowired
 	public CertificateDTO certificateDto;
+	
+	@Autowired
+	ReviewDTO reviewDto;
+	
+	
 	
 	
 	/* Student Related Hits Are Here */
@@ -67,4 +74,19 @@ public class StudentController {
 	}
 	
 	/* Subjects Related Hits are here */ //
+	
+	
+	
+	
+	
+	/* Certificate Reviews Hits are Here */
+	
+	@PostMapping("/addReview/{certificateId}")
+	public String addReview(@RequestBody ReviewDTOModel reviewDTOModel,@PathVariable String certificateId) {
+		boolean result = this.reviewDto.addReview(reviewDTOModel, certificateId);
+		if(result) {
+			return "Review Added Successfully";
+		}
+		return "Review is not Added Successfully";
+	}
 }
