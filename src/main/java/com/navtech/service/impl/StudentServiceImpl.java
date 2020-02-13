@@ -1,11 +1,11 @@
 package com.navtech.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.navtech.custome.exception.StudentNotFoundException;
 import com.navtech.dao.StudentDAO;
 import com.navtech.models.Certificate;
 import com.navtech.models.Course;
@@ -68,8 +68,9 @@ public class StudentServiceImpl implements StudentService {
 		Student student = this.getStudentFromStudentList(username);
 		if(student != null) {
 			return student.getCertificateList();
+		} else {
+			throw new StudentNotFoundException(username + " is not a Valid User");
 		}
-		return new ArrayList<Certificate>();
 	}
 
 	@Override
