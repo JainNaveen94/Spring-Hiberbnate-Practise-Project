@@ -86,4 +86,9 @@ public class StudentDTOImpl implements StudentDTO {
 		return certificateDTOModel;
 	}
 
+	@Override
+	public String enrolledForTheCourse(String studentUserName, String courseName) {
+		return this.studentService.enrolledForTheCourse(studentUserName, courseName);
+	}
+
 }

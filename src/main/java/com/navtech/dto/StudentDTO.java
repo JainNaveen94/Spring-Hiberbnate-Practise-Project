@@ -13,4 +13,6 @@ public interface StudentDTO {
 
 	List<CertificateDTOModel> getCertificateListOfStudent(String username);
 
+	String enrolledForTheCourse(String studentUserName, String courseName);
+
 }

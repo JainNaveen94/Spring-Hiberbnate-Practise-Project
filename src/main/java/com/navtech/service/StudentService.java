@@ -12,6 +12,10 @@ public interface StudentService {
 	String issueCertificateToStudent(String certificateId, String username);
 
 	List<Certificate> getCertificateListOfStudent(String username);
+
+	String enrolledForTheCourse(String studentUserName, String courseName);
+	
+	Student getStudentFromStudentList(String username);
 	
 	
 
