@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.navtech.dao.StudentDAO;
 import com.navtech.models.Certificate;
+import com.navtech.models.Course;
 import com.navtech.models.Student;
 import com.navtech.service.CertificateService;
+import com.navtech.service.CourseService;
 import com.navtech.service.StudentService;
 
 
@@ -23,6 +25,9 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Autowired
 	CertificateService certificateService;
+	
+	@Autowired
+	CourseService courseService;
 
 	@Override
 	public Student addStudent(Student student) {
@@ -67,7 +72,8 @@ public class StudentServiceImpl implements StudentService {
 		return new ArrayList<Certificate>();
 	}
 
-	private Student getStudentFromStudentList(String username) {
+	@Override
+	public Student getStudentFromStudentList(String username) {
 		List<Student> students = this.studentDao.getAllTheStudents();
 		if(students.size() > 0) {
 			for(Student studentObj: students)  {
@@ -77,6 +83,28 @@ public class StudentServiceImpl implements StudentService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public String enrolledForTheCourse(String studentUserName, String courseName) {
+		Student student = this.getStudentFromStudentList(studentUserName);
+		if(student  != null) {
+			Course course = this.courseService.getCourseFromCourseName(courseName);
+			if(course != null) {
+				course.getStudents().add(student);
+				student.getCourses().add(course);
+				boolean result = this.studentDao.updateStudent(student);
+				if(result) {
+					return studentUserName + " Enrolled For the Course " + courseName + " Successfully";
+				} else {
+					return "Internal Server Error Please try Again";
+				}
+			} else {
+				return courseName + " is not a Valid Course.";
+			}
+		} else {
+			return studentUserName + " is not Exist into the System.";
+		}
 	}
 	
 

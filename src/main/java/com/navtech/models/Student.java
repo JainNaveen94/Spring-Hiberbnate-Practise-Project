@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -42,6 +44,19 @@ public class Student {
 			CascadeType.REFRESH
 	})
 	private List<Certificate> certificateList;
+	
+	@ManyToMany(cascade = {
+			CascadeType.DETACH,
+			CascadeType.MERGE,
+			CascadeType.PERSIST,
+			CascadeType.REFRESH
+	})
+	@JoinTable(
+		name="Student_Course",
+		joinColumns = @JoinColumn(name="studentId"),
+		inverseJoinColumns = @JoinColumn(name="courseId")
+	)
+	private List<Course> courses;
 	
 	/* Default Constructor */
 	
@@ -97,6 +112,14 @@ public class Student {
 
 	public void setCertificateList(List<Certificate> certificateList) {
 		this.certificateList = certificateList;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 
 }

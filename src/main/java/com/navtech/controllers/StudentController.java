@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.navtech.dto.CertificateDTO;
+import com.navtech.dto.CourseDTO;
 import com.navtech.dto.ReviewDTO;
 import com.navtech.dto.StudentDTO;
 import com.navtech.dto.models.CertificateDTOModel;
+import com.navtech.dto.models.CourseDTOModel;
 import com.navtech.dto.models.ReviewDTOModel;
 import com.navtech.dto.models.StudentDTOModel;
 
@@ -27,13 +29,16 @@ public class StudentController {
 	/* DTOs Used Inside the Student Controller */
 	
 	@Autowired
-	public StudentDTO studentDto;
+	private StudentDTO studentDto;
 	
 	@Autowired
-	public CertificateDTO certificateDto;
+	private CertificateDTO certificateDto;
 	
 	@Autowired
-	ReviewDTO reviewDto;
+	private ReviewDTO reviewDto;
+	
+	@Autowired
+	private CourseDTO courseDto;
 	
 	
 	
@@ -73,6 +78,11 @@ public class StudentController {
 		return this.certificateDto.deleteCertificate(certificateId);
 	}
 	
+	@PostMapping("/applyCourse")
+	public String enrolledForTheCourse(@RequestParam String studentUserName, 
+			@RequestParam String courseName) {
+		return this.studentDto.enrolledForTheCourse(studentUserName, courseName);
+	}
 	/* Subjects Related Hits are here */ //
 	
 	
@@ -88,5 +98,23 @@ public class StudentController {
 			return "Review Added Successfully";
 		}
 		return "Review is not Added Successfully";
+	}
+	
+	
+	/* Course Related Hits Are Here */
+	
+	@PostMapping("/addCourse")
+	public CourseDTOModel addCourse(@RequestBody CourseDTOModel courseDtoModel) {
+		return this.courseDto.addCourse(courseDtoModel);
+	}
+	
+	@GetMapping("/getStudentCourseList")
+	public List<CourseDTOModel> getStudentCourseList(@RequestParam String username) {
+		return this.courseDto.getStudentCourseList(username);
+	}
+	
+	@DeleteMapping("/deleteCourse")
+	public String deleteCourse(@RequestParam String courseName) {
+		return this.courseDto.deleteCourse(courseName);
 	}
 }
