@@ -3,6 +3,7 @@ package com.navtech.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.navtech.custome.exception.StudentNotFoundException;
@@ -21,16 +22,20 @@ public class StudentServiceImpl implements StudentService {
 	/* */
 	
 	@Autowired
-	StudentDAO studentDao;
+	private StudentDAO studentDao;
 	
 	@Autowired
-	CertificateService certificateService;
+	private CertificateService certificateService;
 	
 	@Autowired
-	CourseService courseService;
+	private CourseService courseService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public Student addStudent(Student student) {
+		student.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
 		return this.studentDao.addStudent(student);
 	}
 
