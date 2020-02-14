@@ -6,4 +6,5 @@ import com.navtech.models.Student;
 
 public interface StudentRepositories extends JpaRepository<Student, Long> {
 
+	Student findByUsername(String username);
 }
