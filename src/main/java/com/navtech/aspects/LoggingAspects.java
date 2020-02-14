@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspects {
 
-	/* Step: 1. // Setup the Logger Service To Perform Logging */ 
+	/* Step: 1. // Setup the Logger Service To Perform Logging */
 	private Logger logger = Logger.getLogger(getClass().getName());
 
 	/* Step: 2. // Setup Point cuts Declarations */
